@@ -2,6 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  border: red solid 1px;
+.hamburger {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  transition: all 0.25s;
+  position: relative;
+}
+
+.hamburger-top,
+.hamburger-middle,
+.hamburger-bottom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: hsl(0, 0%, 75%);
+  transform: rotate(0);
+  transition: all 0.5s;
+}
+
+.hamburger-middle {
+  transform: translateY(7px);
+}
+
+.hamburger-bottom {
+  transform: translateY(14px);
+}
+
+
+
+.open .hamburger-top {
+  transform: rotate(45deg) translateY(6px) translate(6px);
+}
+
+.open .hamburger-middle {
+  display: none;
+}
+
+.open .hamburger-bottom {
+  transform: rotate(-45deg) translateY(6px) translate(-6px);
+}
+
+.thinGrayLine {
+  width: 80%;
+  height: 0.1em;
+  background: hsl(0, 0%, 50%);
+  transform: scaleY(0.5);
+}
+
+.custom__container {
+  width: 100%;
+}
+@media (min-width: 480px) {
+  .custom__container {
+      max-width: 480px;
+  }
+}
+@media (min-width: 768px) {
+  .custom__container {
+      max-width: 768px;
+  }
+}
+@media (min-width: 976px) {
+  .custom__container {
+      max-width: 976px;
+  }
+}
+@media (min-width: 1440px) {
+  .custom__container {
+      max-width: 77%;
+  }
+}
+@media (min-width: 1870px) {
+  .custom__container {
+      max-width: 1440px;
+  }
 }

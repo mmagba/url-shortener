@@ -9,11 +9,11 @@ const Nav = () => {
     const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
 
     return (
-        <nav className='relative custom__container mx-auto pt-12'>
+        <nav className='relative custom__container mx-auto pt-12 z-50'>
 
             <div className='flex items-center justify-between'>
 
-                <div className="flex gap-10 items-center">
+                <div className="flex gap-11 items-center">
                     <Image src='/logo.svg' width={125} height={125} alt='shortly logo' />
                     <Link className='text-gray hover:text-veryDarkBlue font-bold hidden md:inline' href='/'>Features</Link>
                     <Link className='text-gray hover:text-veryDarkBlue font-bold hidden md:inline' href='/'>Pricing</Link>

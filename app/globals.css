@@ -80,3 +80,7 @@
       max-width: 1440px;
   }
 }
+
+.custom__size{
+  width: 150%;
+}

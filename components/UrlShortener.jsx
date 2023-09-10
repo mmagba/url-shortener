@@ -18,7 +18,7 @@ const UrlShortener = () => {
     const [shortenedUrl, setShortenedUrl] = useState('');
     const [savedUrls, setSavedUrls] = useState([]);
     const [loading, setLoading] = useState(false);
-    
+    const [emptyInputWarning, setEmptyInputWarning] = useState(false);
 
     useEffect(() => {
         // Load saved URLs from local storage when the component mounts
@@ -30,6 +30,9 @@ const UrlShortener = () => {
 
     const saveUrlToLocalStorage = (originalUrl, shortenedUrl) => {
         const newSavedUrls = [{ originalUrl, shortenedUrl }, ...savedUrls];
+        if (newSavedUrls.length > 5) {
+            newSavedUrls.pop();
+        }
         localStorage.setItem('savedUrls', JSON.stringify(newSavedUrls));
         setSavedUrls(newSavedUrls);
     };
@@ -47,6 +50,14 @@ const UrlShortener = () => {
         setLoading(true);
         event.preventDefault();
 
+        if (originalUrl.trim() === '') {
+            setEmptyInputWarning(true);
+            setLoading(false);
+            return;
+        } else {
+            setEmptyInputWarning(false);
+        }
+
         const secureURL = ensureHttps(originalUrl);
 
         const response = await fetch(`/api/shorten/${encodeURIComponent(secureURL)}`);
@@ -57,6 +68,7 @@ const UrlShortener = () => {
         // Save the URL to local storage
         saveUrlToLocalStorage(originalUrl, newURL);
         setLoading(false);
+        setOriginalUrl('');
     }
 
 
@@ -64,14 +76,17 @@ const UrlShortener = () => {
         <section className='bg-gray font-bold text-lg parent'>
             <div className='custom__container mx-auto'>
                 <form onSubmit={submitHandler} className='flex flex-col bg-darkViolet p-8 md:p-12 gap-5 rounded-lg child md:flex-row md:justify-center'>
-                    <input
-                        value={originalUrl}
-                        onChange={(e) => setOriginalUrl(e.target.value)}
-                        className='rounded-lg p-3 md:w-5/6'
-                        type="text"
-                        placeholder='Shorten a link here...' />
+                    <div className='md:w-5/6'>
+                        <input
+                            value={originalUrl}
+                            onChange={(e) => setOriginalUrl(e.target.value)}
+                            className={`rounded-lg p-3 w-full h-16 ${emptyInputWarning ? 'warning_border placeholder-red' : ''}`}
+                            type="text"
+                            placeholder='Shorten a link here...' />
+                        {emptyInputWarning && <div className='text-red text-sm font-light'>Please add a link</div>}
+                    </div>
 
-                    <button type='submit' className={`${loading ? 'bg-darkViolet' : 'bg-cyan hover:bg-lightCyan'} text-white rounded-lg p-3 cursor-pointer md:w-1/6`}>
+                    <button type='submit' className={`${loading ? 'bg-gray cursor-none' : 'bg-cyan hover:bg-lightCyan'} h-16 text-white rounded-lg p-3 cursor-pointer md:w-1/6`}>
                         {loading ? 'Shortening...' : 'Shorten It!'}
                     </button>
                 </form>

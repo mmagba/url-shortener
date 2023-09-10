@@ -124,3 +124,8 @@
   }
 }
 
+
+
+.warning_border {
+  border: hsl(0, 87%, 67%) solid 0.25rem;
+}

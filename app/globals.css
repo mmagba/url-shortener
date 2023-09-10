@@ -108,9 +108,19 @@
   margin-bottom: -5.5rem;
 }
 
+.flex-child {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
+
 @media (min-width: 768px) {
   .child {
     margin-bottom: -4rem;
+  }
+
+  .flex-child {
+    width: 400rem;
   }
 }
 

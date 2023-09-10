@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Result from './Result'
 
 
@@ -16,8 +16,35 @@ const UrlShortener = () => {
 
     const [originalUrl, setOriginalUrl] = useState('');
     const [shortenedUrl, setShortenedUrl] = useState('');
+    const [savedUrls, setSavedUrls] = useState([]);
+    const [loading, setLoading] = useState(false);
+    
+
+    useEffect(() => {
+        // Load saved URLs from local storage when the component mounts
+        const savedUrlsFromLocalStorage = JSON.parse(localStorage.getItem('savedUrls'));
+        if (savedUrlsFromLocalStorage) {
+            setSavedUrls(savedUrlsFromLocalStorage);
+        }
+    }, []);
+
+    const saveUrlToLocalStorage = (originalUrl, shortenedUrl) => {
+        const newSavedUrls = [{ originalUrl, shortenedUrl }, ...savedUrls];
+        localStorage.setItem('savedUrls', JSON.stringify(newSavedUrls));
+        setSavedUrls(newSavedUrls);
+    };
+
+
+    const handleDelete = (id) => {
+        const savedUrlsFromLocalStorage = JSON.parse(localStorage.getItem('savedUrls'));
+        savedUrlsFromLocalStorage.splice(id, 1);
+        localStorage.setItem('savedUrls', JSON.stringify(savedUrlsFromLocalStorage));
+        setSavedUrls(savedUrlsFromLocalStorage);
+    }
+
 
     const submitHandler = async (event) => {
+        setLoading(true);
         event.preventDefault();
 
         const secureURL = ensureHttps(originalUrl);
@@ -26,6 +53,10 @@ const UrlShortener = () => {
         let newURL = await response.text();
         newURL = newURL.slice(1, -1);
         setShortenedUrl(newURL);
+
+        // Save the URL to local storage
+        saveUrlToLocalStorage(originalUrl, newURL);
+        setLoading(false);
     }
 
 
@@ -40,11 +71,18 @@ const UrlShortener = () => {
                         type="text"
                         placeholder='Shorten a link here...' />
 
-                    <button type='submit' className='bg-cyan hover:bg-lightCyan text-white rounded-lg p-3 cursor-pointer md:w-1/6'>Shorten It!</button>
+                    <button type='submit' className={`${loading ? 'bg-darkViolet' : 'bg-cyan hover:bg-lightCyan'} text-white rounded-lg p-3 cursor-pointer md:w-1/6`}>
+                        {loading ? 'Shortening...' : 'Shorten It!'}
+                    </button>
                 </form>
-                <Result longURL={'https://www.agbadev.com/'} shortURL={'https://bitly.ws/Uk5d'} />
-                <Result longURL={'https://www.agbadev.com/'} shortURL={'https://bitly.ws/Uk5d'} />
-                <Result longURL={'https://www.agbadev.com/'} shortURL={'https://bitly.ws/Uk5d'} />
+
+                <ul>
+                    <li>
+                        {savedUrls.map((url, index) => (
+                            <Result key={index} longURL={url.originalUrl} shortURL={url.shortenedUrl} id={index} handleDelete={handleDelete} />
+                        ))}
+                    </li>
+                </ul>
             </div>
         </section>
     )

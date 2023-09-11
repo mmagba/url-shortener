@@ -25,11 +25,6 @@ const Hero = () => {
                 <div className='md:hidden relative custom__size'>
                     <Image src='/illustration-working.svg' width={4000} height={4000} alt='illustration' />
                 </div>
-                
-
-
-
-
 
 
             </div>

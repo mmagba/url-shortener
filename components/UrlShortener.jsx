@@ -75,7 +75,7 @@ const UrlShortener = () => {
     return (
         <section className='bg-lightGray font-bold text-lg parent'>
             <div className='custom__container mx-auto'>
-                <form onSubmit={submitHandler} className='flex flex-col bg-darkViolet p-8 md:p-12 gap-5 rounded-lg child md:flex-row md:justify-center'>
+                <form onSubmit={submitHandler} className='flex flex-col bg-darkViolet p-8 md:p-12 gap-5 rounded-lg child md:flex-row md:justify-center form_background'>
                     <div className='md:w-5/6'>
                         <input
                             value={originalUrl}

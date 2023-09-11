@@ -106,6 +106,19 @@
   background-color: hsl(180, 66%, 49%);
 }
 
+.cta_background {
+  background-image: url('../public/bg-boost-mobile.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.form_background {
+  background-image: url('../public/bg-shorten-mobile.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
 @media (min-width: 480px) {
   .custom__container {
     max-width: 480px;
@@ -124,6 +137,20 @@
   .flex-child {
     width: 400rem;
   }
+
+  .cta_background {
+    background-image: url('../public/bg-boost-desktop.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .form_background {
+    background-image: url('../public/bg-shorten-desktop.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+
 }
 
 @media (min-width: 976px) {

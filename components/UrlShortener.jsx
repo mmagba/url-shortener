@@ -86,7 +86,11 @@ const UrlShortener = () => {
                         {emptyInputWarning && <div className='text-red text-sm font-light'>Please add a link</div>}
                     </div>
 
-                    <button type='submit' className={`${loading ? 'bg-gray cursor-none' : 'bg-cyan hover:bg-lightCyan'} h-16 text-white rounded-lg p-3 cursor-pointer md:w-1/6`}>
+                    <button
+                        type='submit'
+                        className={`${loading ? 'bg-gray cursor-none' : 'bg-cyan hover:bg-lightCyan cursor-pointer'} h-16 text-white rounded-lg p-3  md:w-1/5`}
+                        disabled={loading}
+                    >
                         {loading ? 'Shortening...' : 'Shorten It!'}
                     </button>
                 </form>
